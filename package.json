@@ -1,7 +1,7 @@
 {
   "displayName": "Homebridge Node Broadlink",
   "name": "homebridge-node-broadlink",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Uses node-broadlink package to interface with broadlink smart devices",
   "license": "Apache-2.0",
   "repository": {
