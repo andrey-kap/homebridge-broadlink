@@ -10,7 +10,9 @@ import {
 
 import * as broadlink from 'node-broadlink'
 import { S3 } from 'node-broadlink/dist/hub'
+import { Hysen } from 'node-broadlink'
 import { LC1Switch } from './LC1Switch'
+import { ThermostatBeok } from './ThermostatBeok'
 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings'
 
@@ -96,6 +98,47 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
             ])
           }
         })
+      }
+      if (device.deviceType === 20141) {
+        const thetmostat = device as Hysen
+        await thetmostat.auth()
+        const uniqueId = device.mac.toString()
+        const uuid = this.api.hap.uuid.generate(uniqueId)
+
+        const deviceName = thetmostat.name
+
+        const existingAccessory = this.accessories.find(
+          accessory => accessory.UUID === uuid,
+        )
+
+        if (existingAccessory) {
+          // the accessory already exists
+          this.log.info(
+            'Restoring existing accessory from cache:',
+            existingAccessory.displayName,
+          )
+
+          new LC1Switch(this, existingAccessory)
+        } else {
+          this.log.info('Adding new accessory:', deviceName)
+
+          const accessory = new this.api.platformAccessory(
+            `#Thetmostat Beok`,
+            uuid,
+          )
+
+          accessory.context.device = {
+            uniqueId,
+            thetmostat,
+            deviceName,
+          }
+
+          new ThermostatBeok(this, accessory)
+
+          this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [
+            accessory,
+          ])
+        }
       }
     }
   }
