@@ -2,7 +2,7 @@ import { Service, PlatformAccessory, HAP } from 'homebridge'
 import { BroadlinkPlatform } from './platform'
 
 export class ThermostatBeok {
-  private Service: Service
+  private service: Service
   private hap: HAP
 
   constructor(
@@ -14,31 +14,36 @@ export class ThermostatBeok {
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Beok')
       .setCharacteristic(this.platform.Characteristic.Model, 'HY02/HY03')
 
-    this.Service = new this.platform.Service.Thermostat(
-      this.accessory.displayName,
-    )
-    this.hap = this.platform.api.hap
-    this.Service.getCharacteristic(
-      this.platform.api.hap.Characteristic.CurrentHeatingCoolingState,
-    ).onGet(this.handleCurrentHeatingCoolingStateGet.bind(this))
+    const serviceName = 'Thermostat Beok'
+    this.service =
+      this.accessory.getService(serviceName) ??
+      this.accessory.addService(this.platform.Service.Thermostat, serviceName)
 
-    this.Service.getCharacteristic(
-      this.platform.api.hap.Characteristic.TargetHeatingCoolingState,
-    )
+    this.hap = this.platform.api.hap
+    this.service
+      .getCharacteristic(
+        this.platform.api.hap.Characteristic.CurrentHeatingCoolingState,
+      )
+      .onGet(this.handleCurrentHeatingCoolingStateGet.bind(this))
+
+    this.service
+      .getCharacteristic(
+        this.platform.api.hap.Characteristic.TargetHeatingCoolingState,
+      )
       .onGet(this.handleTargetHeatingCoolingStateGet.bind(this))
       .onSet(this.handleTargetHeatingCoolingStateSet.bind(this))
 
-    this.Service.getCharacteristic(
-      this.hap.Characteristic.CurrentTemperature,
-    ).onGet(this.handleCurrentTemperatureGet.bind(this))
+    this.service
+      .getCharacteristic(this.hap.Characteristic.CurrentTemperature)
+      .onGet(this.handleCurrentTemperatureGet.bind(this))
 
-    this.Service.getCharacteristic(this.hap.Characteristic.TargetTemperature)
+    this.service
+      .getCharacteristic(this.hap.Characteristic.TargetTemperature)
       .onGet(this.handleTargetTemperatureGet.bind(this))
       .onSet(this.handleTargetTemperatureSet.bind(this))
 
-    this.Service.getCharacteristic(
-      this.hap.Characteristic.TemperatureDisplayUnits,
-    )
+    this.service
+      .getCharacteristic(this.hap.Characteristic.TemperatureDisplayUnits)
       .onGet(this.handleTemperatureDisplayUnitsGet.bind(this))
       .onSet(this.handleTemperatureDisplayUnitsSet.bind(this))
   }
