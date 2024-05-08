@@ -16,7 +16,7 @@ export class ThermostatBeok {
     private readonly platform: BroadlinkPlatform,
     private readonly accessory: PlatformAccessory,
   ) {
-    this.device = this.accessory.context.device.thermostat
+    this.device = this.accessory.context.device
 
     this.accessory
       .getService(this.platform.Service.AccessoryInformation)!

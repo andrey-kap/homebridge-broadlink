@@ -128,11 +128,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
             uuid,
           )
 
-          accessory.context.device = {
-            uniqueId,
-            thermostat,
-            deviceName,
-          }
+          accessory.context.device = thermostat
 
           new ThermostatBeok(this, accessory)
 
