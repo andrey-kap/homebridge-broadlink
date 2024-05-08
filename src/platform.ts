@@ -103,7 +103,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
       if (device.deviceType === 20141) {
         const thermostat = device as Hysen
         await thermostat.auth()
-        const mac = device.mac
+        const mac = thermostat.mac
         const uuid = this.api.hap.uuid.generate(mac.toString())
 
         const deviceName = thermostat.name
@@ -129,7 +129,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
           )
 
           accessory.context.device = {
-            host: device.host,
+            host: thermostat.host,
           }
 
           new ThermostatBeok(this, accessory)
