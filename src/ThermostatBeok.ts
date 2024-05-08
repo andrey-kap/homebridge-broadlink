@@ -66,7 +66,7 @@ export class ThermostatBeok {
       // return (async () => {
       let currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.OFF
       const currentStatus =
-        await this.accessory.context.thetmostat.getFullStatus()
+        await this.accessory.context.device.thetmostat.getFullStatus()
 
       if (currentStatus.roomTemp > currentStatus.thermostatTemp) {
         currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.COOL
@@ -88,7 +88,7 @@ export class ThermostatBeok {
 
     let currentValue = this.hap.Characteristic.TargetHeatingCoolingState.OFF
     const currentStatus =
-      await this.accessory.context.thermostat.getFullStatus()
+      await this.accessory.context.device.thermostat.getFullStatus()
 
     if (currentStatus.autoMode == 1) {
       currentValue = this.hap.Characteristic.TargetHeatingCoolingState.AUTO
@@ -115,7 +115,7 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET CurrentTemperature')
 
     const currentStatus: any =
-      await this.accessory.context.thermostat.getFullStatus()
+      await this.accessory.context.device.thermostat.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -127,7 +127,7 @@ export class ThermostatBeok {
 
     // set this to a valid value for TargetTemperature
     const currentStatus: any =
-      await this.accessory.context.thermostat.getFullStatus()
+      await this.accessory.context.device.thermostat.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -136,7 +136,7 @@ export class ThermostatBeok {
    */
   handleTargetTemperatureSet = async (value: any) => {
     //this.platform.log.debug('Triggered SET TargetTemperature:', value)
-    await this.accessory.context.thermostat.setTemp(value)
+    await this.accessory.context.device.thermostat.setTemp(value)
   }
 
   /**
