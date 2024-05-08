@@ -52,7 +52,7 @@ export class ThermostatBeok {
    * Handle requests to get the current value of the "Current Heating Cooling State" characteristic
    */
   async handleCurrentHeatingCoolingStateGet() {
-    this.platform.log.debug('Triggered GET CurrentHeatingCoolingState')
+    //this.platform.log.debug('Triggered GET CurrentHeatingCoolingState')
 
     // set this to a valid value for CurrentHeatingCoolingState
     //const currentValue = hap.Characteristic.CurrentHeatingCoolingState.OFF;
@@ -76,7 +76,7 @@ export class ThermostatBeok {
    * Handle requests to get the current value of the "Target Heating Cooling State" characteristic
    */
   handleTargetHeatingCoolingStateGet() {
-    this.platform.log.debug('Triggered GET TargetHeatingCoolingState')
+    //this.platform.log.debug('Triggered GET TargetHeatingCoolingState')
 
     return (async () => {
       let currentValue = this.hap.Characteristic.TargetHeatingCoolingState.OFF
@@ -99,14 +99,14 @@ export class ThermostatBeok {
    * Handle requests to set the "Target Heating Cooling State" characteristic
    */
   handleTargetHeatingCoolingStateSet(value: any) {
-    this.platform.log.debug('Triggered SET TargetHeatingCoolingState:', value)
+    //this.platform.log.debug('Triggered SET TargetHeatingCoolingState:', value)
   }
 
   /**
    * Handle requests to get the current value of the "Current Temperature" characteristic
    */
   handleCurrentTemperatureGet() {
-    this.platform.log.debug('Triggered GET CurrentTemperature')
+    //this.platform.log.debug('Triggered GET CurrentTemperature')
 
     return (async () => {
       const currentStatus: any =
@@ -119,7 +119,7 @@ export class ThermostatBeok {
    * Handle requests to get the current value of the "Target Temperature" characteristic
    */
   handleTargetTemperatureGet() {
-    this.platform.log.debug('Triggered GET TargetTemperature')
+    //this.platform.log.debug('Triggered GET TargetTemperature')
 
     // set this to a valid value for TargetTemperature
 
@@ -134,7 +134,7 @@ export class ThermostatBeok {
    * Handle requests to set the "Target Temperature" characteristic
    */
   handleTargetTemperatureSet(value: any) {
-    this.platform.log.debug('Triggered SET TargetTemperature:', value)
+    //this.platform.log.debug('Triggered SET TargetTemperature:', value)
     ;(async () => {
       await this.accessory.context.thermostat.setTemp(value)
     })()
@@ -144,7 +144,7 @@ export class ThermostatBeok {
    * Handle requests to get the current value of the "Temperature Display Units" characteristic
    */
   handleTemperatureDisplayUnitsGet() {
-    this.platform.log.debug('Triggered GET TemperatureDisplayUnits')
+    //this.platform.log.debug('Triggered GET TemperatureDisplayUnits')
 
     // set this to a valid value for TemperatureDisplayUnits
     const currentValue = this.hap.Characteristic.TemperatureDisplayUnits.CELSIUS
@@ -156,6 +156,6 @@ export class ThermostatBeok {
    * Handle requests to set the "Temperature Display Units" characteristic
    */
   handleTemperatureDisplayUnitsSet(value: any) {
-    this.platform.log.debug('Triggered SET TemperatureDisplayUnits:', value)
+    //this.platform.log.debug('Triggered SET TemperatureDisplayUnits:', value)
   }
 }
