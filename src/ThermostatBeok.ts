@@ -168,6 +168,7 @@ export class ThermostatBeok {
     const { uniqueId } = this.accessory.context.device
     const devices = await broadlink.discover()
     const device = devices.find(d => d.mac.toString() === uniqueId) as Hysen
-    return (await device.auth()) as Hysen
+    await device.auth()
+    return device as Hysen
   }
 }
