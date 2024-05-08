@@ -19,11 +19,13 @@ export class ThermostatBeok {
   ) {
     this.device = this.accessory.context.device
 
-    this.platform.log.info(
-      `Device object length`,
-      Object.keys(this.accessory.context.device).length,
-    )
-
+    for (const key in this.accessory.context.device) {
+      this.platform.log.info(
+        'Device key/value',
+        key,
+        this.accessory.context.device[key],
+      )
+    }
     this.accessory
       .getService(this.platform.Service.AccessoryInformation)!
       .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Beok')
