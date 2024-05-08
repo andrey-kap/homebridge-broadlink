@@ -20,8 +20,8 @@ export class ThermostatBeok {
     this.device = this.accessory.context.device
 
     this.platform.log.info(
-      `Device object lenght`,
-      this.accessory.context.device.length,
+      `Device object length`,
+      Object.keys(this.accessory.context.device).length,
     )
 
     this.accessory
