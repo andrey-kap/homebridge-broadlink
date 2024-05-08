@@ -171,7 +171,7 @@ export class ThermostatBeok {
     try {
       await device.auth()
     } catch (error) {
-      this.platform.log.debug(`Device host: ${address}, device: ${device}`)
+      this.platform.log.info(`Device host: ${address}, device: ${device}`)
     }
     return device as Hysen
   }
