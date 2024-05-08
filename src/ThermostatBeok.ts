@@ -24,28 +24,28 @@ export class ThermostatBeok {
       .getCharacteristic(
         this.platform.api.hap.Characteristic.CurrentHeatingCoolingState,
       )
-      .onGet(this.handleCurrentHeatingCoolingStateGet.bind(this.accessory))
+      .onGet(this.handleCurrentHeatingCoolingStateGet)
 
     this.service
       .getCharacteristic(
         this.platform.api.hap.Characteristic.TargetHeatingCoolingState,
       )
-      .onGet(this.handleTargetHeatingCoolingStateGet.bind(this.accessory))
-      .onSet(this.handleTargetHeatingCoolingStateSet.bind(this.accessory))
+      .onGet(this.handleTargetHeatingCoolingStateGet)
+      .onSet(this.handleTargetHeatingCoolingStateSet)
 
     this.service
       .getCharacteristic(this.hap.Characteristic.CurrentTemperature)
-      .onGet(this.handleCurrentTemperatureGet.bind(this.accessory))
+      .onGet(this.handleCurrentTemperatureGet)
 
     this.service
       .getCharacteristic(this.hap.Characteristic.TargetTemperature)
-      .onGet(this.handleTargetTemperatureGet.bind(this.accessory))
-      .onSet(this.handleTargetTemperatureSet.bind(this.accessory))
+      .onGet(this.handleTargetTemperatureGet)
+      .onSet(this.handleTargetTemperatureSet)
 
     this.service
       .getCharacteristic(this.hap.Characteristic.TemperatureDisplayUnits)
-      .onGet(this.handleTemperatureDisplayUnitsGet.bind(this.accessory))
-      .onSet(this.handleTemperatureDisplayUnitsSet.bind(this.accessory))
+      .onGet(this.handleTemperatureDisplayUnitsGet)
+      .onSet(this.handleTemperatureDisplayUnitsSet)
   }
 
   /**
