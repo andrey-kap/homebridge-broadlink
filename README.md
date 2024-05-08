@@ -6,7 +6,7 @@ Currently supported are:
 
 - S3 Hub
 - LC1 Light Switch
-- Thermostat Beokф
+- Thermostat Beok
 
 ## Install Development Dependencies
 
