@@ -119,7 +119,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
             existingAccessory.displayName,
           )
 
-          this.log.info(`Device host: ${thermostat.host}`)
+          this.log.info(`Device address: ${thermostat.host.address}`)
 
           new ThermostatBeok(this, existingAccessory)
         } else {
@@ -134,7 +134,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
             address: device.host.address,
           }
 
-          this.log.info(`Device host: ${thermostat.host}`)
+          this.log.info(`Device address: ${thermostat.host.address}`)
 
           new ThermostatBeok(this, accessory)
 
