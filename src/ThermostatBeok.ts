@@ -17,7 +17,12 @@ export class ThermostatBeok {
     private readonly platform: BroadlinkPlatform,
     private readonly accessory: PlatformAccessory,
   ) {
-    this.device = accessory.context.device
+    this.device = this.accessory.context.device
+
+    this.platform.log.info(
+      `Device object lenght`,
+      this.accessory.context.device.length,
+    )
 
     this.accessory
       .getService(this.platform.Service.AccessoryInformation)!
