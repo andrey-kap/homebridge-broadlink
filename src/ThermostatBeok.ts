@@ -168,6 +168,7 @@ export class ThermostatBeok {
     const { host } = this.accessory.context.device
     const devices = await broadlink.discover()
     const device = devices.find(d => d.host === host) as Hysen
+    this.platform.log.debug(`Device host: ${host}, device: ${device}`)
     await device.auth()
     return device as Hysen
   }
