@@ -5,6 +5,7 @@ import {
   CharacteristicValue,
 } from 'homebridge'
 import { BroadlinkPlatform } from './platform'
+import * as broadlink from 'node-broadlink'
 import { Hysen } from 'node-broadlink'
 
 export class ThermostatBeok {
@@ -69,7 +70,8 @@ export class ThermostatBeok {
 
       // return (async () => {
       let currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.OFF
-      const currentStatus = await this.device.getFullStatus()
+      const device = await this.getDevice()
+      const currentStatus = await device.getFullStatus()
 
       if (currentStatus.roomTemp > currentStatus.thermostatTemp) {
         currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.COOL
@@ -90,7 +92,8 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET TargetHeatingCoolingState')
 
     let currentValue = this.hap.Characteristic.TargetHeatingCoolingState.OFF
-    const currentStatus = await this.device.getFullStatus()
+    const device = await this.getDevice()
+    const currentStatus = await device.getFullStatus()
 
     if (currentStatus.autoMode == 1) {
       currentValue = this.hap.Characteristic.TargetHeatingCoolingState.AUTO
@@ -116,7 +119,8 @@ export class ThermostatBeok {
   handleCurrentTemperatureGet = async () => {
     //this.platform.log.debug('Triggered GET CurrentTemperature')
 
-    const currentStatus: any = await this.device.getFullStatus()
+    const device = await this.getDevice()
+    const currentStatus = await device.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -127,7 +131,8 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET TargetTemperature')
 
     // set this to a valid value for TargetTemperature
-    const currentStatus: any = await this.device.getFullStatus()
+    const device = await this.getDevice()
+    const currentStatus = await device.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -136,7 +141,8 @@ export class ThermostatBeok {
    */
   handleTargetTemperatureSet = async (value: any) => {
     //this.platform.log.debug('Triggered SET TargetTemperature:', value)
-    await this.device.setTemp(value)
+    const device = await this.getDevice()
+    await device.setTemp(value)
   }
 
   /**
@@ -156,5 +162,12 @@ export class ThermostatBeok {
    */
   handleTemperatureDisplayUnitsSet = async (value: any) => {
     //this.platform.log.debug('Triggered SET TemperatureDisplayUnits:', value)
+  }
+
+  getDevice = async (): Promise<Hysen> => {
+    const { uniqueId } = this.accessory.context.device
+    const devices = await broadlink.discover()
+    const device = devices.find(d => d.mac.toString() === uniqueId) as Hysen
+    return (await device.auth()) as Hysen
   }
 }
