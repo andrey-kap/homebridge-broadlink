@@ -165,9 +165,9 @@ export class ThermostatBeok {
   }
 
   getDevice = async (): Promise<Hysen> => {
-    const { uniqueId } = this.accessory.context.device
+    const { mac } = this.accessory.context.device
     const devices = await broadlink.discover()
-    const device = devices.find(d => d.mac.toString() === uniqueId) as Hysen
+    const device = devices.find(d => d.mac === mac) as Hysen
     await device.auth()
     return device as Hysen
   }
