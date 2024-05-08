@@ -119,7 +119,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
             existingAccessory.displayName,
           )
 
-          new LC1Switch(this, existingAccessory)
+          new ThermostatBeok(this, existingAccessory)
         } else {
           this.log.info('Adding new accessory:', deviceName)
 
