@@ -129,7 +129,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
           )
 
           accessory.context.device = {
-            host: thermostat.host,
+            address: device.host.address,
           }
 
           new ThermostatBeok(this, accessory)
