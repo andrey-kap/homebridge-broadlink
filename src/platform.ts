@@ -101,12 +101,12 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
         })
       }
       if (device.deviceType === 20141) {
-        const thetmostat = device as Hysen
-        await thetmostat.auth()
+        const thermostat = device as Hysen
+        await thermostat.auth()
         const uniqueId = device.mac.toString()
         const uuid = this.api.hap.uuid.generate(uniqueId)
 
-        const deviceName = thetmostat.name
+        const deviceName = thermostat.name
 
         const existingAccessory = this.accessories.find(
           accessory => accessory.UUID === uuid,
@@ -130,7 +130,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
 
           accessory.context.device = {
             uniqueId,
-            thetmostat,
+            thermostat,
             deviceName,
           }
 
