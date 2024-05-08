@@ -44,6 +44,7 @@ export class BroadlinkPlatform implements DynamicPlatformPlugin {
   async discoverDevices() {
     const devices = await broadlink.discover()
     for (const device of devices) {
+      this.log.info('Finding device, type:', device.deviceType)
       if (device.deviceType === 42573) {
         const hub = device as S3
         await hub.auth()
