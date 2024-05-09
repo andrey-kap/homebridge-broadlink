@@ -11,13 +11,14 @@ import { Hysen } from 'node-broadlink'
 export class ThermostatBeok {
   private service: Service
   private hap: HAP
-  private device: Hysen
+  private device: Hysen | undefined
 
   constructor(
     private readonly platform: BroadlinkPlatform,
     private readonly accessory: PlatformAccessory,
   ) {
-    this.device = this.accessory.context.device
+    this.device = undefined
+    ;(async () => (this.device = await this.getDevice()))()
 
     for (const key in this.accessory.context.device) {
       this.platform.log.info(
@@ -77,9 +78,9 @@ export class ThermostatBeok {
 
       // return (async () => {
       let currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.OFF
-      const device = await this.getDevice()
-      const currentStatus = await device.getFullStatus()
-
+      //const device = await this.getDevice()
+      if (!this.device) return 0
+      const currentStatus = await this.device.getFullStatus()
       if (currentStatus.roomTemp > currentStatus.thermostatTemp) {
         currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.COOL
       } else if (currentStatus.roomTemp <= currentStatus.thermostatTemp) {
@@ -99,8 +100,8 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET TargetHeatingCoolingState')
 
     let currentValue = this.hap.Characteristic.TargetHeatingCoolingState.OFF
-    const device = await this.getDevice()
-    const currentStatus = await device.getFullStatus()
+    if (!this.device) return 0
+    const currentStatus = await this.device.getFullStatus()
 
     if (currentStatus.autoMode == 1) {
       currentValue = this.hap.Characteristic.TargetHeatingCoolingState.AUTO
@@ -126,8 +127,8 @@ export class ThermostatBeok {
   handleCurrentTemperatureGet = async () => {
     //this.platform.log.debug('Triggered GET CurrentTemperature')
 
-    const device = await this.getDevice()
-    const currentStatus = await device.getFullStatus()
+    if (!this.device) return 0
+    const currentStatus = await this.device.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -138,8 +139,8 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET TargetTemperature')
 
     // set this to a valid value for TargetTemperature
-    const device = await this.getDevice()
-    const currentStatus = await device.getFullStatus()
+    if (!this.device) return 0
+    const currentStatus = await this.device.getFullStatus()
     return currentStatus.thermostatTemp
   }
 
@@ -148,8 +149,9 @@ export class ThermostatBeok {
    */
   handleTargetTemperatureSet = async (value: any) => {
     //this.platform.log.debug('Triggered SET TargetTemperature:', value)
-    const device = await this.getDevice()
-    await device.setTemp(value)
+    //const device = await this.getDevice()
+    if (!this.device) return
+    await this.device.setTemp(value)
   }
 
   /**
