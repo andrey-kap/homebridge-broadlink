@@ -129,7 +129,7 @@ export class ThermostatBeok {
 
     if (!this.device) return 0
     const currentStatus = await this.device.getFullStatus()
-    return currentStatus.thermostatTemp
+    return currentStatus.roomTemp
   }
 
   /**
