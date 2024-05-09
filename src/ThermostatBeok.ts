@@ -139,7 +139,7 @@ export class ThermostatBeok {
     //this.platform.log.debug('Triggered GET TargetTemperature')
 
     // set this to a valid value for TargetTemperature
-    if (!this.device) return 0
+    if (!this.device) return 10
     const currentStatus = await this.device.getFullStatus()
     return currentStatus.thermostatTemp
   }
