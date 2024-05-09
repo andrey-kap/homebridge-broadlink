@@ -81,9 +81,9 @@ export class ThermostatBeok {
       //const device = await this.getDevice()
       if (!this.device) return 0
       const currentStatus = await this.device.getFullStatus()
-      if (currentStatus.roomTemp > currentStatus.thermostatTemp) {
+      if (currentStatus.roomTemp >= currentStatus.thermostatTemp) {
         currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.COOL
-      } else if (currentStatus.roomTemp <= currentStatus.thermostatTemp) {
+      } else if (currentStatus.roomTemp < currentStatus.thermostatTemp) {
         currentValue = this.hap.Characteristic.CurrentHeatingCoolingState.HEAT
       }
 
